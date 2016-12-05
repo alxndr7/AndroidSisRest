@@ -1,37 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-    android:layout_width="fill_parent" android:layout_height="fill_parent"  android:padding="20dip"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    >
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <EditText android:id="@+id/txtEmail" android:layout_height="wrap_content"
-        android:layout_width="fill_parent" android:hint="Email" android:inputType="textEmailAddress" />
-
-    <EditText android:id="@+id/txtPass" android:layout_height="wrap_content"
-        android:layout_width="fill_parent" android:hint="Password" android:inputType="textPassword"
-        android:layout_marginTop="15dip" android:layout_marginBottom="30dip" />
-
-
-    <Button android:id="@+id/btnLogin" android:layout_height="wrap_content"
-        android:layout_width="wrap_content" android:text="enviar"
-        android:layout_gravity="center_horizontal" android:paddingLeft="15dip" android:paddingRight="15dip" />
-
-    <TextView android:id="@+id/link_to_register"
-        android:layout_width="fill_parent"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dip"
-        android:layout_marginBottom="40dip"
-        android:text="registrate!"
-        android:gravity="center"
-        android:textSize="20dip"
-        android:textColor="#0b84aa"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <TextView android:id="@+id/login_error"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dip"
-        android:layout_marginBottom="40dip"
-        android:gravity="center"
-        android:textSize="20dip"
-        android:textColor="#0b84aa"/>
-</LinearLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.AppBarLayout>
+
+
+    <!-- FAB -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="@dimen/size_fab"
+        android:layout_height="@dimen/size_fab"
+        android:layout_margin="@dimen/fab_margin"
+        android:onClick="onFabClick"
+        android:src="@drawable/ic_search"
+        app:borderWidth="0dp"
+
+        app:layout_anchor="@id/pager"
+        app:layout_anchorGravity="bottom|right" />
+</android.support.design.widget.CoordinatorLayout>

@@ -47,6 +47,8 @@ public class Login extends Activity {
     private ProgressDialog pDialog;
     private String TAG = MainActivity.class.getSimpleName();
     private ListView lv;
+    private String usu, passw;
+    private boolean flagLogin;
 
     ArrayList<HashMap<String, String>> contactList;
 
@@ -64,25 +66,19 @@ public class Login extends Activity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        new GetContacts().execute();
         // Login button Click Event
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
 
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
+                usu = inputEmail.getText().toString().trim();
+                passw = inputPassword.getText().toString().trim();
 
                 // Check for empty data in the form
-                if (!email.isEmpty() && !password.isEmpty()) {
-                    if(email.compareTo(usuario)==0 && password.compareTo(contrasena) == 0){
-                        Intent i = new Intent(getApplicationContext(),
-                                MainActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
-                    else{
+                if (!usu.isEmpty() && !passw.isEmpty()) {
+                    new GetContacts().execute();
 
+                    if(!flagLogin){
                         Toast.makeText(getApplicationContext(),
                                 "Usuario o contraseña incorrecta, intentelo nuevamente!", Toast.LENGTH_LONG)
                                 .show();
@@ -127,9 +123,6 @@ public class Login extends Activity {
 
     private class GetContacts extends AsyncTask<Void, Void, Void> {
 
-        private EditText inputEmail = (EditText) findViewById(R.id.email);
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -139,9 +132,10 @@ public class Login extends Activity {
 
         @Override
         protected Void doInBackground(Void... arg0) {
+
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
-            String url = "http://192.168.0.103:8085/WebServiceSisRest/public/";
+            String url = "http://192.168.0.102:8080/tesis0.0/public/index.php/servValidarLogin/" + usu +'/'+ passw;
             String jsonStr = sh.makeServiceCall(url);
 
             Log.e(TAG, "Response from url: " + jsonStr);
@@ -150,16 +144,28 @@ public class Login extends Activity {
                     JSONObject jsonObj = new JSONObject(jsonStr);
 
                     // Getting JSON Array node
-                    JSONArray contacts = jsonObj.getJSONArray("usuarios");
+                    JSONArray JsonUsu = jsonObj.getJSONArray("usuario");
 
-                    // looping through All Contacts
-                        JSONObject c = contacts.getJSONObject(0);
+                    if(JsonUsu.length() != 0) {
+
+                        Intent i = new Intent(getApplicationContext(),
+                                MainActivity.class);
+                        startActivity(i);
+                        finish();
+
+                        flagLogin = true;
+                        /*
+                        // looping through All Contacts
+                        JSONObject c = JsonUsu.getJSONObject(0);
                         //JSONArray jObj = new JSONArray(json);
-                         usuario = c.getString("cUsuario");
+                        usuario = c.getString("cUsuario");
                         contrasena = c.getString("cPass");
-                    Log.e(TAG, "Json object: " + usuario + contrasena);
-                        //return usuario + '|' + contraseña;
-
+                        Log.e(TAG, "Json object: " + usuario + contrasena);
+                        //return usuario + '|' + contraseña;*/
+                    }
+                    else{
+                        flagLogin = false;
+                    }
 
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());

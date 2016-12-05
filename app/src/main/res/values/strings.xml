@@ -10,4 +10,12 @@
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
+
+    <!-- Tabs -->
+    <string name="title_section1">Últimos Consumos</string>
+    <string name="title_section2">Últimos Pagos</string>
+    <string name="title_section3">Portátiles</string>
+    <string name="title_section4">Opciones</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_shop">Carrito De Compras</string>
 </resources>

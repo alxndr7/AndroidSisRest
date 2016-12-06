@@ -48,7 +48,7 @@ public class Login extends Activity {
     private String TAG = MainActivity.class.getSimpleName();
     private ListView lv;
     private String usu, passw;
-    private boolean flagLogin;
+    private boolean flagLogin=false;
 
     ArrayList<HashMap<String, String>> contactList;
 
@@ -78,13 +78,6 @@ public class Login extends Activity {
                 if (!usu.isEmpty() && !passw.isEmpty()) {
                     new GetContacts().execute();
 
-                    if(!flagLogin){
-                        Toast.makeText(getApplicationContext(),
-                                "Usuario o contraseña incorrecta, intentelo nuevamente!", Toast.LENGTH_LONG)
-                                .show();
-                    }
-                    // login user
-                   // checkLogin(email, password);
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
@@ -123,6 +116,8 @@ public class Login extends Activity {
 
     private class GetContacts extends AsyncTask<Void, Void, Void> {
 
+
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -146,26 +141,11 @@ public class Login extends Activity {
                     // Getting JSON Array node
                     JSONArray JsonUsu = jsonObj.getJSONArray("usuario");
 
-                    if(JsonUsu.length() != 0) {
-
-                        Intent i = new Intent(getApplicationContext(),
-                                MainActivity.class);
-                        startActivity(i);
-                        finish();
-
+                    if(JsonUsu.length() != 0)
                         flagLogin = true;
-                        /*
-                        // looping through All Contacts
-                        JSONObject c = JsonUsu.getJSONObject(0);
-                        //JSONArray jObj = new JSONArray(json);
-                        usuario = c.getString("cUsuario");
-                        contrasena = c.getString("cPass");
-                        Log.e(TAG, "Json object: " + usuario + contrasena);
-                        //return usuario + '|' + contraseña;*/
-                    }
-                    else{
+                    else
                         flagLogin = false;
-                    }
+
 
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -197,12 +177,28 @@ public class Login extends Activity {
 
         @Override
         protected void onPostExecute(Void result) {
+
+            if(!flagLogin){
+                Toast.makeText(getApplicationContext(),
+                        "Usuario o contraseña incorrecta, intentelo nuevamente!", Toast.LENGTH_LONG)
+                        .show();
+            }
+            else {
+                Intent i = new Intent(getApplicationContext(),
+                        MainActivity.class);
+                startActivity(i);
+                finish();
+
+            }
+
+            }
+
            /* super.onPostExecute(result);
             ListAdapter adapter = new SimpleAdapter(Login.this, contactList,
                     R.layout.list_item, new String[]{ "email","mobile"},
                     new int[]{R.id.email, R.id.mobile});
             lv.setAdapter(adapter);*/
-        }
+
     }
 
     private void showDialog() {

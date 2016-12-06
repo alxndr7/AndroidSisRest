@@ -12,22 +12,30 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.onClick;
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        View viewBar = (View) findViewById(R.id.fab);
+        viewBar.setOnClickListener(onClick);
 
         //setToolbar(); // Añadir la toolbar
 
@@ -41,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(mViewPager);
     }
 
+    public View.OnClickListener onClick= new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            showSnackBar("Actualizando...");
+            // Do something in response to button click
+            setupViewPager(mViewPager);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         // Actualizar el contador
         //Utils.setBadgeCount(this, icon, 3);
 
-        String [] adapterValues = new String[]{"46060203"};
+        String [] adapterValues = new String[]{"46060203","80808080"};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, adapterValues);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,adapterValues);
 
@@ -69,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-      /*  int id = item.getItemId();
+       /*int id = item.getItemId();
 
         if (id == R.id.action_shop) {
             showSnackBar("Carrito de compras");
@@ -85,13 +102,14 @@ public class MainActivity extends AppCompatActivity {
      * @param msg Mensaje a proyectar
      */
     private void showSnackBar(String msg) {
+        Log.e(TAG, "UPDATE  : " +"llego");
         Snackbar.make(findViewById(R.id.fab), msg, Snackbar.LENGTH_LONG).show();
     }
 
     /**
      * Establece la toolbar como action bar
      */
-    /*
+/*
     private void setToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-    }*/
-
+    }
+*/
     /**
      * Crea una instancia del view pager con los datos
      * predeterminados
@@ -122,9 +140,12 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param v View presionado
      */
+    /*
     public void onFabClick(View v) {
-        showSnackBar("Buscar producto");
-    }
+        Log.e(TAG, "UPDATE  : " +"llego");
+
+
+    }*/
 
     /**
      * Un {@link FragmentPagerAdapter} que gestiona las secciones, fragmentos y

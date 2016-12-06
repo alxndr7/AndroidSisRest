@@ -102,8 +102,8 @@ public class GridFragment extends Fragment {
                 grid.setAdapter(new GridAdapterPago(getActivity(), jsonItemsPagos));
                 break;
             case 3:
-                grid.addHeaderView(createHeaderView(6, Products.getTelefonos()));
-                grid.setAdapter(new GridAdapter(getActivity(), Products.getTelefonos()));
+                //grid.addHeaderView(createHeaderView(6, Products.getTelefonos()));
+               // grid.setAdapter(new GridAdapter(getActivity(), Products.getTelefonos()));
                 break;
             case 4:
                 //grid.addHeaderView(createHeaderView(6, Products.getPortatiles()));

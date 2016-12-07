@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import in.srain.cube.views.GridViewWithHeaderAndFooter;
 
 import static android.content.ContentValues.TAG;
+import static com.sisrest.bypsi.appsisrest.Constantes.GET_INFO;
 
 /**
  * Un fragmento que contiene una grilla de productos
@@ -173,7 +174,7 @@ public class GridFragment extends Fragment {
 
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
-            String url = "http://192.168.0.102:8080/tesis0.0/public/index.php/wsultimosConsumos/85265475";
+            String url = GET_INFO + Constantes.getDniDefault();
             String jsonStr = sh.makeServiceCall(url);
 
             Log.e(TAG, "Response from url: " + jsonStr);
@@ -185,14 +186,15 @@ public class GridFragment extends Fragment {
                     JSONArray JsonUsu = jsonObj.getJSONArray("ultimosconsumos");
                     jsonItemsConsumos = new Product[JsonUsu.length()];
                     // looping through All Contacts
-                    for (int i = 0; i < JsonUsu.length(); i++) {
-                        JSONObject c = JsonUsu.getJSONObject(i);
-                        String nombre = c.getString("cNomCom");
-                        String dni = c.getString("cDniCom");
-                        String fecha = c.getString("dFecDet");
-                        String cantMenu = c.getString("nCantMenu");
-                        jsonItemsConsumos[i] = new Product(nombre,dni,fecha,cantMenu);
-                        Log.e(TAG, "Parse JSON consumos : " + nombre + '/' + dni + '/' + fecha + '/' + cantMenu );
+                    if(JsonUsu.length() != 0){
+                        for (int i = 0; i < JsonUsu.length(); i++) {
+                            JSONObject c = JsonUsu.getJSONObject(i);
+                            String nombre = c.getString("cNomCom");
+                            String dni = c.getString("cDniCom");
+                            String fecha = c.getString("dFecDet");
+                            String cantMenu = c.getString("nCantMenu");
+                            jsonItemsConsumos[i] = new Product(nombre,dni,fecha,cantMenu);
+                            Log.e(TAG, "Parse JSON consumos : " + nombre + '/' + dni + '/' + fecha + '/' + cantMenu );
 /*
                         Log.e(TAG, "Parse JSON : " + nombre + '/' + dni + '/' + fecha + '/' + cantMenu );
 
@@ -202,35 +204,35 @@ public class GridFragment extends Fragment {
                         jsonItemsConsumos[i].setDni(c.getString("cDniCom"));
                         jsonItemsConsumos[i].setFecha(c.getString("dFecDet"));
                         jsonItemsConsumos[i].setFecha(c.getString("nCantMenu"));*/
+                        }
                     }
+
 
                     // Getting JSON Array node
                     JSONArray JsonPagos = jsonObj.getJSONArray("ultimosPagos");
                     jsonItemsPagos = new Pago[JsonPagos.length()];
                     // looping through All Contacts
-                    for (int i = 0; i < JsonPagos.length(); i++) {
-                        JSONObject c = JsonPagos.getJSONObject(i);
-                        String nombre = c.getString("cNomCom");
-                        String dni = c.getString("cDniCom");
-                        String pago = c.getString("fPagoCom");
-                        String fecha = c.getString("dFecPago");
-                        String cantMenu = c.getString("nNumMenuCom");
-                        String cantDisponible = c.getString("nCantMenu");
+                    if(JsonPagos.length() != 0){
+                        for (int i = 0; i < JsonPagos.length(); i++) {
+                            JSONObject c = JsonPagos.getJSONObject(i);
+                            String nombre = c.getString("cNomCom");
+                            String dni = c.getString("cDniCom");
+                            String pago = c.getString("fPagoCom");
+                            String fecha = c.getString("dFecPago");
+                            String cantMenu = c.getString("nNumMenuCom");
+                            String cantDisponible = c.getString("nCantMenu");
 
-                        Log.e(TAG, "Parse JSON pagos : " + nombre + '/' + dni + '/' + fecha + '/' + cantMenu +'/' +pago +'/' + cantMenu + '/' +cantDisponible);
+                            Log.e(TAG, "Parse JSON pagos : " + nombre + '/' + dni + '/' + fecha + '/' + cantMenu +'/' +pago +'/' + cantMenu + '/' +cantDisponible);
 
-                        jsonItemsPagos[i] = new Pago(nombre,dni,pago,fecha,cantDisponible,cantMenu);
+                            jsonItemsPagos[i] = new Pago(nombre,dni,pago,fecha,cantDisponible,cantMenu);
 
                         /*
                         jsonItemsConsumos[i].setNombre(c.getString("cNomCom"));
                         jsonItemsConsumos[i].setDni(c.getString("cDniCom"));
                         jsonItemsConsumos[i].setFecha(c.getString("dFecDet"));
                         jsonItemsConsumos[i].setFecha(c.getString("nCantMenu"));*/
+                        }
                     }
-
-
-
-
 
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -267,7 +269,7 @@ public class GridFragment extends Fragment {
 
             //ListView mListView = (ListView) findViewById(android.R.id.list);
 
-            Log.e(TAG, "Nombre item pago : " + jsonItemsPagos[0].getNombre());
+           // Log.e(TAG, "Nombre item pago : " + jsonItemsPagos[0].getNombre());
 
             GridViewWithHeaderAndFooter grid = (GridViewWithHeaderAndFooter)getView().findViewById(R.id.gridview);
             setUpGridView(grid);

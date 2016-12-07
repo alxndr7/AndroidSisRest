@@ -32,6 +32,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.sisrest.bypsi.appsisrest.Constantes.LOGIN;
+
 /**
  * Created by Alxndr on 02/12/2016.
  */
@@ -130,7 +132,7 @@ public class Login extends Activity {
 
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
-            String url = "http://192.168.0.102:8080/tesis0.0/public/index.php/servValidarLogin/" + usu +'/'+ passw;
+            String url = LOGIN + usu +'/'+ passw;
             String jsonStr = sh.makeServiceCall(url);
 
             Log.e(TAG, "Response from url: " + jsonStr);
@@ -141,8 +143,14 @@ public class Login extends Activity {
                     // Getting JSON Array node
                     JSONArray JsonUsu = jsonObj.getJSONArray("usuario");
 
-                    if(JsonUsu.length() != 0)
+                    if(JsonUsu.length() != 0){
+                        JSONObject c = JsonUsu.getJSONObject(0);
+                        Constantes.setCodigoUsuario(c.getInt("nCodUsu"));
+                        Constantes.setNombreUsuario(c.getString("cNomUsu"));
+                        Constantes.setDniDefault(c.getString("cDniCom"));
                         flagLogin = true;
+                    }
+
                     else
                         flagLogin = false;
 

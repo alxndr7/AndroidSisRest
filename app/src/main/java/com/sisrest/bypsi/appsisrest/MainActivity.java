@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         // Actualizar el contador
         //Utils.setBadgeCount(this, icon, 3);
 
-        String [] adapterValues = new String[]{"46060203","80808080"};
+        String [] adapterValues = new String[]{Constantes.getDniDefault()};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, adapterValues);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,adapterValues);
 
@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showSnackBar(String msg) {
         Log.e(TAG, "UPDATE  : " +"llego");
+        Log.e(TAG, "CONSTANTES  : " +Constantes.getCodigoUsuario());
+        Log.e(TAG, "CONSTANTES  : " +Constantes.getDniDefault());
+
         Snackbar.make(findViewById(R.id.fab), msg, Snackbar.LENGTH_LONG).show();
     }
 

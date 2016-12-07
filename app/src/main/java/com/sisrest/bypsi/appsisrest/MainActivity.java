@@ -2,38 +2,55 @@ package com.sisrest.bypsi.appsisrest;
 
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.onClick;
 import static android.content.ContentValues.TAG;
+import static com.sisrest.bypsi.appsisrest.R.id.appbar;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager mViewPager;
+    private Toolbar appbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //appbar = (Toolbar)findViewById(R.id.appbar);
+        //setSupportActionBar(appbar);
+
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_nav_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         View viewBar = (View) findViewById(R.id.fab);
         viewBar.setOnClickListener(onClick);
 
@@ -47,7 +64,49 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
 
         tabs.setupWithViewPager(mViewPager);
+
+        navView = (NavigationView)findViewById(R.id.navview);
+
+        navView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                        boolean fragmentTransaction = false;
+                        Fragment fragment = null;
+
+                        switch (menuItem.getItemId()) {
+                            case R.id.menu_seccion_1:
+                                fragment = new Fragment1();
+                                fragmentTransaction = true;
+                                break;
+                            case R.id.menu_seccion_2:
+
+                                break;
+                            case R.id.menu_seccion_3:
+
+                                break;
+                            case R.id.menu_opcion_1:
+                                Log.i("NavigationView", "Pulsada opción 1");
+                                break;
+                        }
+
+                        if(fragmentTransaction) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.content_frame, fragment)
+                                    .commit();
+
+                            menuItem.setChecked(true);
+                            getSupportActionBar().setTitle(menuItem.getTitle());
+                        }
+
+                        drawerLayout.closeDrawers();
+
+                        return true;
+                    }
+                });
     }
+
 
     public View.OnClickListener onClick= new View.OnClickListener() {
 
@@ -86,6 +145,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(Gravity.LEFT); //CLOSE Nav Drawer!
+                }else{
+                    drawerLayout.openDrawer(Gravity.LEFT); //OPEN Nav Drawer!
+                }
+                return true;
+            //...
+        }
+
+        return super.onOptionsItemSelected(item);
        /*int id = item.getItemId();
 
         if (id == R.id.action_shop) {
@@ -93,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 */
-        return super.onOptionsItemSelected(item);
     }
 
     /**

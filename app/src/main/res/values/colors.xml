@@ -23,4 +23,8 @@
     <color name="primaryColor">#8BC34A</color>
     <color name="primaryDarkColor">#689F38</color>
     <color name="accentColor">#FAD317</color>
+
+    <color name="color_primary">#3F51B5</color>
+    <color name="color_primary_dark">#303F9F</color>
+    <color name="color_accent">#FF5252</color>
 </resources>

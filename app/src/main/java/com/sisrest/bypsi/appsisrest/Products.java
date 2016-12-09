@@ -8,10 +8,16 @@ public class Products {
 
     private static Product[] nombres = {
             new Product(
-                    "-",
-                    "-",
-                    "-",
-                    "-"
+                    "12",
+                    "12",
+                    "12",
+                    "12"
+            ),
+            new Product(
+                    "13",
+                    "13",
+                    "13",
+                    "13"
             )
     };
 

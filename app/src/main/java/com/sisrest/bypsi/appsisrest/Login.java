@@ -148,6 +148,8 @@ public class Login extends Activity {
                         Constantes.setCodigoUsuario(c.getInt("nCodUsu"));
                         Constantes.setNombreUsuario(c.getString("cNomUsu"));
                         Constantes.setDniDefault(c.getString("cDniCom"));
+                        Constantes.setNombreComensalDefault(c.getString("cNomCom") + ' ' + c.getString("cApeCom"));
+                        Constantes.setLoginUsu(c.getString("cLoginUsu"));
                         flagLogin = true;
                     }
 

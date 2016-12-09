@@ -31,7 +31,6 @@
             android:layout_height="wrap_content" />
     </android.support.design.widget.AppBarLayout>
 
-
     <!-- FAB -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

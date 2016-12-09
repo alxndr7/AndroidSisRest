@@ -13,4 +13,13 @@
     <dimen name="grid_item_text_size">11sp</dimen>
     <dimen name="grid_view_padding">5dp</dimen>
     <dimen name="grid_item_image_size">90dp</dimen>
+
+    <dimen name="espacio_norma_1">16dp</dimen>
+    <dimen name="espacio_norma_2">8dp</dimen>
+
+    <dimen name="padding_izquierdo_cabecera">16dp</dimen>
+
+    <dimen name="altura_miniatura_comida">250dp</dimen>
+
+    <dimen name="ancho_logo">200dp</dimen>
 </resources>

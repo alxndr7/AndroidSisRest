@@ -1,5 +1,6 @@
 package com.sisrest.bypsi.appsisrest;
 
+import android.content.Intent;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -74,14 +75,17 @@ public class MainActivity extends AppCompatActivity {
 
                         boolean fragmentTransaction = false;
                         Fragment fragment = null;
-
+                        Intent i;
                         switch (menuItem.getItemId()) {
                             case R.id.menu_seccion_1:
-                                fragment = new Fragment1();
-                                fragmentTransaction = true;
+                                i = new Intent(getApplicationContext(),
+                                        MiCuenta.class);
+                                startActivity(i);
                                 break;
                             case R.id.menu_seccion_2:
-
+                                i = new Intent(getApplicationContext(),
+                                        Comensales.class);
+                                startActivity(i);
                                 break;
                             case R.id.menu_seccion_3:
 

@@ -1,9 +1,7 @@
 package com.sisrest.bypsi.appsisrest;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,9 +9,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,47 +18,45 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import in.srain.cube.views.GridViewWithHeaderAndFooter;
-
 import static android.content.ContentValues.TAG;
-import static com.sisrest.bypsi.appsisrest.Constantes.LOGIN;
+import static com.sisrest.bypsi.appsisrest.Constantes.GUARDAR_COMENSAL_DEFAULT;
 import static com.sisrest.bypsi.appsisrest.Constantes.OBTENER_COMENSALES;
 
-public class Comensales extends AppCompatActivity {
+public class Defaults extends AppCompatActivity {
+
     ListView list;
-    GridAdapterComensales adapter;
-    public  Comensales CustomListView = null;
-    public boolean flagComensales;
     private mComensal[] jsonComensales;
+    public boolean flagComensales, flagDefault;
     private ProgressDialog pDialog;
+    GridAdapterDefault adapter;
+    public Defaults CustomListView = null;
+    public Button btnGuardar ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comensales);
+        setContentView(R.layout.activity_defaults);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         CustomListView = this;
-        list=(ListView)findViewById(R.id.list);
+        list=(ListView)findViewById(R.id.listDefault);
 
-        new GetComensales().execute();
+        new Defaults.GetComensales().execute();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnGuardar = (Button) findViewById(R.id.btnGuardar);
+
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                Intent i = new Intent(getApplicationContext(),
-                        NuevoComensal.class);
-                startActivity(i);
-
+            public void onClick(View v) {
+                new Defaults.GuardarDefault().execute();
+                Log.d(TAG, "CONSTANTE EN DEFAULT: " + Constantes.getCodComUsu());
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
+
+
 
 
     private class GetComensales extends AsyncTask<Void, Void, Void> {
@@ -69,7 +64,7 @@ public class Comensales extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(Comensales.this,"Json Data is downloading",Toast.LENGTH_LONG).show();
+            Toast.makeText(Defaults.this,"Json Data is downloading",Toast.LENGTH_LONG).show();
 
         }
 
@@ -151,17 +146,100 @@ public class Comensales extends AppCompatActivity {
             }
             else {
                 /**************** Create Custom Adapter *********/
-                adapter=new GridAdapterComensales(CustomListView, jsonComensales);
+                adapter=new GridAdapterDefault(CustomListView, jsonComensales);
                 list.setAdapter(adapter);
             }
 
         }
 
-           /* super.onPostExecute(result);
-            ListAdapter adapter = new SimpleAdapter(Login.this, contactList,
-                    R.layout.list_item, new String[]{ "email","mobile"},
-                    new int[]{R.id.email, R.id.mobile});
-            lv.setAdapter(adapter);*/
+
+    }
+
+
+    private class GuardarDefault extends AsyncTask<Void, Void, Void> {
+
+        String dniDefault;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(Defaults.this,"Json Data is downloading",Toast.LENGTH_LONG).show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            HttpHandler sh = new HttpHandler();
+            // Making a request to url and getting response
+            String url = GUARDAR_COMENSAL_DEFAULT + Constantes.getCodigoUsuario()  + '/' + Constantes.getCodComUsu();
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+
+                    // Getting JSON Array node
+                    JSONArray JsonCom = jsonObj.getJSONArray("respuesta");
+
+                    if(JsonCom.length() != 0){
+
+                            JSONObject c = JsonCom.getJSONObject(0);
+                            dniDefault = c.getString("cDniCom");
+                            flagDefault = true;
+                    }
+
+                    else
+                        flagDefault = false;
+
+
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+
+            if(!flagDefault){
+                Toast.makeText(getApplicationContext(),
+                        "ERROR!", Toast.LENGTH_LONG)
+                        .show();
+            }
+            else {
+                /**************** Create Custom Adapter *********/
+                Constantes.setDniDefault(dniDefault);
+                Intent i = new Intent(getApplicationContext(),
+                        MainActivity.class);
+                startActivity(i);
+            }
+
+        }
+
 
     }
 
@@ -174,6 +252,4 @@ public class Comensales extends AppCompatActivity {
         if (pDialog.isShowing())
             pDialog.dismiss();
     }
-
-
 }

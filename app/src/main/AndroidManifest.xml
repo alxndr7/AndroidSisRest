@@ -20,8 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Login" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".Register" />
+        <activity android:name=".SplashScreenActivityExit" />
         <activity
             android:name=".MiCuenta"
             android:label="@string/title_activity_mi_cuenta"
@@ -48,6 +49,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sisrest.bypsi.appsisrest.Comensales" />
+        </activity>
+        <activity
+            android:name=".Defaults"
+            android:label="@string/title_activity_defaults"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sisrest.bypsi.appsisrest.MainActivity" />
         </activity>
     </application>
 

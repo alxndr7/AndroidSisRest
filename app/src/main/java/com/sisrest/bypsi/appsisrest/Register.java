@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +42,7 @@ public class Register extends Activity {
     private ProgressDialog pDialog;
     private boolean fCrearUsuario;
     private String nombre, usu, passw,dni;
+    private boolean validarNombre = false, validarUsuario = false, validaPassw = false, validarDni = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,74 @@ public class Register extends Activity {
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
 
+        inputNombre.addTextChangedListener(new TextValidator(inputNombre) {
+            @Override
+            public void validate(EditText editText, String text) {
+                //Implementamos la validación que queramos
+                if( !text.matches("^[a-zA-ZñÑáéíóúÁÉÍÓÚ\\s_]{4,20}$") ){
+                    validarNombre = false;
+                    inputNombre.setError( "Solo puedes usar letras." );
+                }
+
+                else
+                    validarNombre=true;
+
+            }
+
+        });
+
+        inputLogin.addTextChangedListener(new TextValidator(inputLogin) {
+            @Override
+            public void validate(EditText editText, String text) {
+                //Implementamos la validación que queramos
+                if( !text.matches("^[a-z\\d_]{4,20}$") ){
+                    validarUsuario = false;
+                    inputLogin.setError( "El usuario solo puede contener letras minúsculas y números y un mínimo de 4 caracteres." );
+                }
+
+                else
+                    validarUsuario=true;
+
+            }
+
+        });
+
+        inputPassword.addTextChangedListener(new TextValidator(inputPassword) {
+            @Override
+            public void validate(EditText editText, String text) {
+                //Implementamos la validación que queramos
+                if( text.length() < 4 ){
+                    validaPassw = false;
+                    inputPassword.setError( "La contraseña es muy corta" );
+                }
+
+                else  if( text.length() >10 )
+                {
+                    validaPassw = false;
+                    inputPassword.setError( "La contraseña  puede contener máximo 10 caracteres." );
+                }
+                else
+                    validaPassw = true;
+
+            }
+
+        });
+
+        dniComensal.addTextChangedListener(new TextValidator(dniComensal) {
+            @Override
+            public void validate(EditText editText, String text) {
+                //Implementamos la validación que queramos
+                if( !text.matches("^[\\d_]{8}$") ){
+                    validarDni = false;
+                    dniComensal.setError( "Error." );
+                }
+
+                else
+                    validarDni=true;
+
+            }
+
+        });
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -76,6 +147,29 @@ public class Register extends Activity {
             }
         });
 
+    }
+
+
+    public abstract class TextValidator implements TextWatcher {
+        private final EditText editText;
+
+        public TextValidator(EditText editText) {
+            this.editText = editText;
+        }
+
+        public abstract void validate(EditText editText, String text);
+
+        @Override
+        final public void afterTextChanged(Editable s) {
+            String text = editText.getText().toString();
+            validate(editText, text);
+        }
+
+        @Override
+        final public void beforeTextChanged(CharSequence s, int start, int count, int after) { /* Don't care */ }
+
+        @Override
+        final public void onTextChanged(CharSequence s, int start, int before, int count) { /* Don't care */ }
     }
 
     private class nuevoUsuarioAndroid extends AsyncTask<Void, Void, Void> {

@@ -70,8 +70,8 @@ public class GridAdapter extends BaseAdapter {
         name.setText(item.getNombre());
 
         // Seteando Descripción
-        TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
-        descripcion.setText(item.getDni());
+        //TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
+        //descripcion.setText(item.getDni());
 
         // Seteando Precio
         TextView precio = (TextView) view.findViewById(R.id.precio);

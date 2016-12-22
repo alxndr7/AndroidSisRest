@@ -12,14 +12,16 @@ public class mComensal {
     private String cApeCom;
     private String cDniCom;
     private String cTelCom;
+    private String cDefault;
 
-    public mComensal(int nCodUsuCom,String cNomCom, String cApeCom, String cDniCom, String cTelCom) {
+    public mComensal(int nCodUsuCom,String cNomCom, String cApeCom, String cDniCom, String cTelCom,String cDefault) {
         this.nCodUsuCom = nCodUsuCom;
 
         this.cNomCom = cNomCom;
         this.cApeCom = cApeCom;
         this.cDniCom = cDniCom;
         this.cTelCom = cTelCom;
+        this.cDefault = cDefault;
     }
 
     public String getcTelCom() {
@@ -68,6 +70,14 @@ public class mComensal {
 
     public void setnCodCom(int nCodCom) {
         this.nCodCom = nCodCom;
+    }
+
+    public String getcDefault() {
+        return cDefault;
+    }
+
+    public void setcDefault(String cDefault) {
+        this.cDefault = cDefault;
     }
 
 }

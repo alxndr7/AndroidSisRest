@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,8 @@ public class GridFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
+
+        Log.e(TAG, "CAMBIO...  : " + sectionNumber);
         return fragment;
     }
 
@@ -85,6 +88,8 @@ public class GridFragment extends Fragment {
     private void setUpGridView(GridViewWithHeaderAndFooter grid) {
 
         int section_number = getArguments().getInt(ARG_SECTION_NUMBER);
+
+
         switch (section_number) {
             case 1:
                // grid.addHeaderView(createHeaderView(6, Products.getTelefonos()));
@@ -174,7 +179,7 @@ public class GridFragment extends Fragment {
 
             HttpHandler sh = new HttpHandler();
             // Making a request to url and getting response
-            String url = GET_INFO + Constantes.getDniDefault();
+            String url = GET_INFO + Constantes.getDniSpinner();
             String jsonStr = sh.makeServiceCall(url);
 
             Log.e(TAG, "Response from url: " + jsonStr);
@@ -190,10 +195,11 @@ public class GridFragment extends Fragment {
                         for (int i = 0; i < JsonUsu.length(); i++) {
                             JSONObject c = JsonUsu.getJSONObject(i);
                             String nombre = c.getString("cNomCom");
+                            String apellido = c.getString("cApeCom");
                             String dni = c.getString("cDniCom");
                             String fecha = c.getString("dFecDet");
                             String cantMenu = c.getString("nCantMenu");
-                            jsonItemsConsumos[i] = new Product(nombre,dni,fecha,cantMenu);
+                            jsonItemsConsumos[i] = new Product(nombre + " " + apellido,dni,fecha,cantMenu);
                             Log.e(TAG, "Parse JSON consumos : " + nombre + '/' + dni + '/' + fecha + '/' + cantMenu );
 /*
                         Log.e(TAG, "Parse JSON : " + nombre + '/' + dni + '/' + fecha + '/' + cantMenu );
@@ -233,6 +239,8 @@ public class GridFragment extends Fragment {
                         jsonItemsConsumos[i].setFecha(c.getString("nCantMenu"));*/
                         }
                     }
+
+
 
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());

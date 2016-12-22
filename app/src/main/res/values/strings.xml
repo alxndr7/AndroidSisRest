@@ -11,6 +11,7 @@
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
     <string name="btn_eliminar">Eliminar</string>
+    <string name="btn_guardar_default">Guardar</string>
     <string name="btn_agregar">Agregar Comensal</string>
 
     <!-- Tabs -->
@@ -26,7 +27,7 @@
     <string name="seccion_1">Mi cuenta</string>
     <string name="seccion_2">Comensales</string>
     <string name="opcion_1">Cerrar Sesión</string>
-    <string name="seccion_3">Cambiar Datos</string>
+    <string name="seccion_3">Comensal Predeterminado</string>
     <string name="otras_opciones">Sesión</string>
     <string name="usuario">Usuario</string>
     <string name="menu_abierto">Menu Abierto</string>
@@ -38,8 +39,10 @@
     <string name="etiqueta_contrasena">Contraseña</string>
     <string name="etiqueta_info_usuario">Información del Usuario</string>
     <string name="titulo_informacion_comensal">Información de Comensal (Predeterminado)</string>
+    <string name="titulo_info_com">Información de Comensal</string>
     <string name="error_busqueda_comensal">El DNI ingresado no se encuentra registrado!</string>
     <string name="titulo_comensal">Información de Comensal</string>
     <string name="title_activity_comensales">Comensales</string>
     <string name="title_activity_nuevo_comensal">NuevoComensal</string>
+    <string name="title_activity_defaults">Defaults</string>
 </resources>

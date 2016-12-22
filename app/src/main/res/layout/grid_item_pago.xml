@@ -10,35 +10,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+        <!--
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/nombreH"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0.4"
+                        android:gravity="center"
+                        android:text="NOMBRE"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/grid_item_text_size" />
 
-            <TextView
-                android:id="@+id/nombreH"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.20"
-                android:gravity="center"
-                android:text="NOMBRE"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/grid_item_text_size" />
-
-            <TextView
-                android:id="@+id/dniH"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.20"
-                android:gravity="center"
-                android:text="DNI"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="@dimen/grid_item_text_size" />
-
+                    <TextView
+                        android:id="@+id/dniH"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0.20"
+                        android:gravity="center"
+                        android:text="DNI"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="@dimen/grid_item_text_size" />
             <TextView
                 android:id="@+id/pagoH"
                 android:layout_width="0dp"
@@ -56,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="0.20"
+                android:layout_weight="0.30"
                 android:gravity="center"
                 android:text="FECHA"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -85,7 +84,7 @@
                 android:textColor="@color/primaryColor"
                 android:textSize="@dimen/grid_item_text_size" />
 
-            <!--
+
             <RatingBar
                 android:id="@+id/rating"
                 style="?android:attr/ratingBarStyleSmall"
@@ -97,16 +96,16 @@
                 android:paddingTop="8dp"
                 android:progressTint="#FDDB39"
                 android:rating="3"
-                android:secondaryProgressTint="#FDDB39" />-->
+                android:secondaryProgressTint="#FDDB39" />
         </LinearLayout>
 
+    -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
+            android:layout_marginLeft="3dp"
             android:layout_marginTop="@dimen/card_margin"
             android:orientation="horizontal">
 
@@ -114,15 +113,18 @@
                 android:id="@+id/nomPago"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.20"
+                android:layout_gravity="left"
+                android:layout_weight="0.30"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/grid_item_text_size" />
-
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#FF0000FF" />
             <TextView
-                android:id="@+id/dniPago"
+                android:id="@+id/fechaPago"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -130,7 +132,13 @@
                 android:gravity="center"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/primaryColor"
                 android:textSize="@dimen/grid_item_text_size" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#FF0000FF" />
 
             <TextView
                 android:id="@+id/pagoCom"
@@ -141,40 +149,35 @@
                 android:gravity="center"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/primaryColor"
-                android:textSize="@dimen/grid_item_text_size" />
+                android:textColor="@color/btn_eliminar"
+                android:textSize="12dp" />
 
-            <TextView
-                android:id="@+id/fechaPago"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.20"
-                android:gravity="right"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/primaryColor"
-                android:textSize="@dimen/grid_item_text_size" />
-
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#FF0000FF" />
             <TextView
                 android:id="@+id/cantPago"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="0.10"
+                android:layout_weight="0.15"
                 android:gravity="center"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/primaryColor"
                 android:textSize="@dimen/grid_item_text_size" />
-
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#FF0000FF" />
             <TextView
                 android:id="@+id/cantDispo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="0.10"
-                android:gravity="right"
+                android:layout_weight="0.15"
+                android:gravity="center"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/primaryColor"

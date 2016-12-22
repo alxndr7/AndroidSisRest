@@ -66,8 +66,8 @@ public class GridAdapterPago extends BaseAdapter {
         name.setText(item.getNombre());
 
         // Seteando Descripción
-        TextView descripcion = (TextView) view.findViewById(R.id.dniPago);
-        descripcion.setText(item.getDni());
+        //TextView descripcion = (TextView) view.findViewById(R.id.dniPago);
+        //descripcion.setText(item.getDni());
 
         // Seteando Precio
         TextView fechaPago = (TextView) view.findViewById(R.id.fechaPago);

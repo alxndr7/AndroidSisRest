@@ -102,7 +102,7 @@ public class NuevoComensal extends AppCompatActivity {
                     if(JsonResp.length() != 0){
                         JSONObject c = JsonResp.getJSONObject(0);
                         //rpta.getBoolean("TRUE");
-                        com = new mComensal(c.getInt("nCodCom"), c.getString("cNomCom"), c.getString("cApeCom"), c.getString("cDniCom"),c.getString("cTelCom"));
+                        com = new mComensal(c.getInt("nCodCom"), c.getString("cNomCom"), c.getString("cApeCom"), c.getString("cDniCom"),c.getString("cTelCom"),"F");
                         flagBuscar = true;
                     }
 

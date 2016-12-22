@@ -21,9 +21,11 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar appbar;
     private DrawerLayout drawerLayout;
     private NavigationView navView;
+    private TableRow trConsumos, trPagos;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,34 @@ public class MainActivity extends AppCompatActivity {
 
         tabs.setupWithViewPager(mViewPager);
 
+        trConsumos = (TableRow) findViewById(R.id.rowConsumos);
+        trPagos = (TableRow) findViewById(R.id.rowPagos);
+        trPagos.setVisibility(View.GONE);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0){
+                    trPagos.setVisibility(View.GONE);
+                    trConsumos.setVisibility(View.VISIBLE);
+                }
+                if(position == 1){
+                    trPagos.setVisibility(View.VISIBLE);
+                    trConsumos.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         navView = (NavigationView)findViewById(R.id.navview);
 
         navView.setNavigationItemSelectedListener(
@@ -88,10 +120,12 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(i);
                                 break;
                             case R.id.menu_seccion_3:
-
+                                i = new Intent(getApplicationContext(),
+                                        Defaults.class);
+                                startActivity(i);
                                 break;
                             case R.id.menu_opcion_1:
-                                Log.i("NavigationView", "Pulsada opción 1");
+                                finish();
                                 break;
                         }
 
@@ -133,19 +167,29 @@ public class MainActivity extends AppCompatActivity {
         // Actualizar el contador
         //Utils.setBadgeCount(this, icon, 3);
 
-        String [] adapterValues = new String[]{Constantes.getDniDefault()};
+        final String [] adapterValues = Constantes.getDNIS();// new String[]{Constantes.getDniDefault()};
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, adapterValues);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,adapterValues);
-
         MenuItem item2 = menu.findItem(R.id.spinner);
-
-        Spinner spinner = (Spinner) MenuItemCompat.getActionView(item2);
+        spinner = (Spinner) MenuItemCompat.getActionView(item2);
         spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getPosition(Constantes.getDniDefault()));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.e(TAG, "POSITION SPINNER  : " + position);
+                Constantes.setDniSpinner(adapterValues[position]);
+                setupViewPager(mViewPager);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -177,10 +221,6 @@ public class MainActivity extends AppCompatActivity {
      * @param msg Mensaje a proyectar
      */
     private void showSnackBar(String msg) {
-        Log.e(TAG, "UPDATE  : " +"llego");
-        Log.e(TAG, "CONSTANTES  : " +Constantes.getCodigoUsuario());
-        Log.e(TAG, "CONSTANTES  : " +Constantes.getDniDefault());
-
         Snackbar.make(findViewById(R.id.fab), msg, Snackbar.LENGTH_LONG).show();
     }
 
@@ -239,6 +279,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+
+            Log.e(TAG, "FRAGMENTO: " + mFragmentTitles.get(position));
             return mFragments.get(position);
         }
 
@@ -254,6 +296,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+
+
+            Log.e(TAG, "FRAGMENTO: " + mFragmentTitles.get(position));
             return mFragmentTitles.get(position);
         }
     }

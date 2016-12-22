@@ -3,15 +3,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_seccion_1"
-            android:icon="@drawable/ic_menu"
+            android:icon="@mipmap/micuenta"
             android:title="@string/seccion_1"/>
         <item
             android:id="@+id/menu_seccion_2"
-            android:icon="@drawable/ic_menu"
+            android:icon="@mipmap/comensales"
             android:title="@string/seccion_2"/>
         <item
             android:id="@+id/menu_seccion_3"
-            android:icon="@drawable/ic_menu"
+            android:icon="@mipmap/defaults"
             android:title="@string/seccion_3"/>
     </group>
 
@@ -21,7 +21,7 @@
         <menu>
             <item
                 android:id="@+id/menu_opcion_1"
-                android:icon="@drawable/ic_menu"
+                android:icon="@mipmap/exit"
                 android:title="@string/opcion_1"/>
         </menu>
     </item>

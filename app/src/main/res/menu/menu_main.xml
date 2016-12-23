@@ -16,9 +16,14 @@
         android:orderInCategory="1"
         android:title="@string/action_shop"
         app:showAsAction="ifRoom" />-->
+
     <item android:id="@+id/spinner"
         app:showAsAction="always"
         android:title="Filter"
+        android:spinnerMode="dropdown"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_spinner_background"
         app:actionViewClass="android.widget.Spinner" />
 
 </menu>
